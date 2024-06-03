@@ -10,22 +10,10 @@
  */
 void binary_tree_delete(binary_tree_t *tree)
 {
-	binary_tree_t *newNode;
-
-	newNode = (binary_tree_t *)malloc(sizeof(binary_tree_t));
-	if (newNode == NULL || parent == NULL)
-		return (NULL);
-	newNode->parent = parent;
-	newNode->n = value;
-	newNode->left = NULL;
-	newNode->right = NULL;
-	/* Assign left child of parent if already parent has child*/
-	if (parent->left != NULL)
-	{
-		newNode->left = parent->left;
-		parent->left->parent = newNode;
-	}
-	/* Assign parent as left child of newNode */
-	parent->left = newNode;
-	return (newNode);
+	if (tree == NULL)
+		return;
+	/*use divide to free*/
+	binary_tree_delete(tree->left);
+	binary_tree_delete(tree->right);
+	free(tree);
 }
