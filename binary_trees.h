@@ -79,4 +79,5 @@ Queue *createQueue();
 void enqueue(Queue *queue, binary_tree_t *treeNode);
 binary_tree_t *dequeue(Queue *queue);
 int isQueueEmpty(Queue *queue);
+bst_t *bst_insert(bst_t **tree, int value);
 #endif
