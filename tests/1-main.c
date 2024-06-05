@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "binary_trees.h"
+#include "../binary_trees.h"
 
 /**
  * main - Entry point
@@ -29,7 +29,6 @@ int main(void)
 		free(root);
 		return (1);
 	}
-
 	binary_tree_print(root);
 	printf("\n");
 
@@ -40,7 +39,6 @@ int main(void)
 		free(root);
 		return (1);
 	}
-
 	if (!binary_tree_insert_left(root, 54))
 	{
 		free(root->left->left);
@@ -49,8 +47,6 @@ int main(void)
 		free(root);
 		return (1);
 	}
-
 	binary_tree_print(root);
-
 	return (0);
 }

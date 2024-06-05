@@ -3,115 +3,74 @@
 #include "binary_trees.h"
 
 /**
+ * create_binary_tree - Creates a binary tree node
+ * @parent: Pointer to the parent node
+ * @value: Value to store in the new node
+ * Return: Pointer to the newly created node
+ */
+binary_tree_t *create_binary_tree(binary_tree_t *parent, int value)
+{
+	binary_tree_t *node = binary_tree_node(parent, value);
+
+	if (node == NULL)
+		exit(1);
+
+	return (node);
+}
+
+/**
+ * link_binary_tree_nodes - Links nodes of a binary tree
+ * @parent: Pointer to the parent node
+ * @child: Pointer to the child node
+ */
+void link_binary_tree_nodes(binary_tree_t *parent, binary_tree_t *child)
+{
+	if (child == NULL)
+	{
+		free(parent);
+		exit(1);
+	}
+
+	if (parent != NULL)
+	{
+		parent->left = child;
+		child->parent = parent;
+	}
+}
+
+/**
  * main - Entry point
- *
  * Return: Always 0 (Success)
  */
 int main(void)
 {
-	binary_tree_t *root;
-	binary_tree_t *sibling;
+	binary_tree_t *root, *sibling;
 
-	root = binary_tree_node(NULL, 98);
-	if (root == NULL)
-		return (1);
-
-	root->left = binary_tree_node(root, 12);
-	if (root->left == NULL)
-	{
-		free(root);
-		return (1);
-	}
-
-	root->right = binary_tree_node(root, 128);
-	if (root->right == NULL)
-	{
-		free(root->left);
-		free(root);
-		return (1);
-	}
-
-	root->left->right = binary_tree_node(root->left, 54);
-	if (root->left->right == NULL)
-	{
-		free(root->left);
-		free(root->right);
-		free(root);
-		return (1);
-	}
-
-	root->right->right = binary_tree_node(root->right, 402);
-	if (root->right->right == NULL)
-	{
-		free(root->left->right);
-		free(root->left);
-		free(root->right);
-		free(root);
-		return (1);
-	}
-
-	root->left->left = binary_tree_node(root->left, 10);
-	if (root->left->left == NULL)
-	{
-		free(root->left->right);
-		free(root->left);
-		free(root->right->right);
-		free(root->right);
-		free(root);
-		return (1);
-	}
-
-	root->right->left = binary_tree_node(root->right, 110);
-	if (root->right->left == NULL)
-	{
-		free(root->left->left);
-		free(root->left->right);
-		free(root->left);
-		free(root->right->right);
-		free(root->right);
-		free(root);
-		return (1);
-	}
-
-	root->right->right->left = binary_tree_node(root->right->right, 200);
-	if (root->right->right->left == NULL)
-	{
-		free(root->left->left);
-		free(root->left->right);
-		free(root->left);
-		free(root->right->left);
-		free(root->right->right);
-		free(root->right);
-		free(root);
-		return (1);
-	}
-
-	root->right->right->right = binary_tree_node(root->right->right, 512);
-	if (root->right->right->right == NULL)
-	{
-		free(root->left->left);
-		free(root->left->right);
-		free(root->left);
-		free(root->right->left);
-		free(root->right->right->left);
-		free(root->right->right);
-		free(root->right);
-		free(root);
-		return (1);
-	}
+	root = create_binary_tree(NULL, 98);
+	link_binary_tree_nodes(root, create_binary_tree(root, 12));
+	link_binary_tree_nodes(root, create_binary_tree(root, 128));
+	link_binary_tree_nodes(root->left, create_binary_tree(root->left, 54));
+	link_binary_tree_nodes(root->right, create_binary_tree(root->right, 402));
+	link_binary_tree_nodes(root->left, create_binary_tree(root->left, 10));
+	link_binary_tree_nodes(root->right, create_binary_tree(root->right, 110));
+	link_binary_tree_nodes(root->right->right,
+	create_binary_tree(root->right->right, 200));
+	link_binary_tree_nodes(root->right->right,
+	create_binary_tree(root->right->right, 512));
 
 	binary_tree_print(root);
 
 	sibling = binary_tree_sibling(root->left);
 	printf("Sibling of %d: %d\n", root->left->n, sibling ? sibling->n : -1);
 	sibling = binary_tree_sibling(root->right->left);
-	printf("Sibling of %d: %d\n", root->right->left->n, sibling ? sibling->n : -1);
+	printf("Sibling of %d: %d\n",
+	root->right->left->n, sibling ? sibling->n : -1);
 	sibling = binary_tree_sibling(root->left->right);
-	printf("Sibling of %d: %d\n", root->left->right->n, sibling ? sibling->n : -1);
+	printf("Sibling of %d: %d\n",
+	root->left->right->n, sibling ? sibling->n : -1);
 	sibling = binary_tree_sibling(root);
 	printf("Sibling of %d: %p\n", root->n, (void *)sibling);
 
-	/* Clean up */
 	free(root->left->left);
 	free(root->left->right);
 	free(root->right->left);
