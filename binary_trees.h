@@ -75,4 +75,8 @@ void binary_tree_levelorder_recursive(const binary_tree_t *tree,
 				      size_t level, void (*func)(int));
 size_t binary_tree_leaves(const binary_tree_t *tree);
 int binary_tree_is_complete(const binary_tree_t *tree);
+Queue *createQueue();
+void enqueue(Queue *queue, binary_tree_t *treeNode);
+binary_tree_t *dequeue(Queue *queue);
+int isQueueEmpty(Queue *queue);
 #endif
